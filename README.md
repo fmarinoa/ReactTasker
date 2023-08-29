@@ -34,7 +34,7 @@ Sigue estos pasos para instalar y ejecutar el proyecto:
 
 Si tienes alguna pregunta o comentario, no dudes en ponerte en contacto conmigo:
 
-- [Email](malito:franco.edson.18014@gmail.com)
+- [Email](mailto:franco.edson.18014@gmail.com)
 - [LinkedIn](https://www.linkedin.com/in/franco-mari%C3%B1o-2a289620a/)
 
 ¡Gracias por usar mi proyecto! Espero que te sea útil. 😄
