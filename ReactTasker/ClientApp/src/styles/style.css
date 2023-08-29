@@ -1,0 +1,13 @@
+.background-container {
+    background-image: url('../images/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    position: relative;
+    opacity: 0.85; /* Ajusta la opacidad según tus preferencias (0.0 a 1.0) */
+    z-index: 0; /* Asegúrate de que esté detrás de otros elementos */
+  }
+.min-vh-100 {
+    min-height: 55vh !important;
+}
