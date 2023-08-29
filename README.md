@@ -9,6 +9,7 @@ https://www.taskmaker.somee.com/
 - 📋 Lista de Tareas: Administra tus tareas de manera eficiente.
 - 📅 Fecha de Registro: Registra la fecha de cada tarea automáticamente.
 - ⚙️ Fácil de Usar: Interfaz sencilla y amigable.
+- 🚫Control de exepciones: no se pueden añadir tareas vacías
 
 ## 🛠️ Instalación
 
