@@ -1,11 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import { useEffect, useState } from "react";
-import './styles/style.css'; 
+import './styles/style.css';
 
 const App = () => {
 
   const [tarea, setTareas] = useState([])
   const [descripcion, setDescripcion] = useState("");
+  const [error, setError] = useState("");
+
 
 
   const mostrarTareas = async () => {
@@ -31,30 +33,37 @@ const App = () => {
     mostrarTareas();
   }, [])
 
-  const guardarTarea =async(e)=>{
-    e.preventDefault()
+  const guardarTarea = async (e) => {
+    e.preventDefault();
 
-    const response = await fetch("api/tarea/Guardar",{
-      method:"POST",
-      headers:{
+    // Verificar si la descripción está vacía o solo contiene espacios en blanco
+    if (!descripcion.trim()) {
+      setError("La descripción de la tarea no puede estar vacía.");
+      return;
+    }
+
+    const response = await fetch("api/tarea/Guardar", {
+      method: "POST",
+      headers: {
         'Content-Type': 'application/json;charset=utf-8'
       },
-      body:JSON.stringify({descripcion:descripcion})
-    })
+      body: JSON.stringify({ descripcion: descripcion })
+    });
 
-    if (response.ok){
+    if (response.ok) {
       setDescripcion("");
+      setError(""); // Limpia el mensaje de error si la tarea se guarda con éxito
       await mostrarTareas();
     }
   }
 
-  const cerrarTarea =async(id)=>{
+  const cerrarTarea = async (id) => {
 
-    const response = await fetch("api/tarea/Cerrar/"+id,{
-      method:"DELETE",
+    const response = await fetch("api/tarea/Cerrar/" + id, {
+      method: "DELETE",
     })
 
-    if (response.ok){
+    if (response.ok) {
       await mostrarTareas();
     }
   }
@@ -65,7 +74,7 @@ const App = () => {
       document.body.classList.remove('background-container');
     };
   }, []);
-  
+
   return (
     <div className="container mt-5">
       <h1 className="text-center ">Lista de Tareas</h1>
@@ -87,47 +96,53 @@ const App = () => {
               </div>
             </div>
           </form>
+          {error && (
+            <div className="alert alert-danger alert-dismissible" role="alert">
+              {error}
+              <button type="button" className="btn-close" onClick={() => setError("")}></button>
+            </div>
+          )}
         </div>
       </div>
 
       <div className="row mt-4 justify-content-center min-vh-100">
         <div className="col-md-6">
-            {tarea.map((item) => (
-              <div key={item.idTarea} className="list-group-item list-group-item-action">
-                <h5 className="text-primary">{item.descripcion}</h5>
-                <div className="d-flex justify-content-between">
-                  <small className="text-muted">{formatDate(item.fechaRegistro)}</small>
-                  <button onClick={() => cerrarTarea(item.idTarea)} className="btn btn-sm btn-outline-danger">
-                    Cerrar
-                  </button>
-                </div>
+          {tarea.map((item) => (
+            <div key={item.idTarea} className="list-group-item list-group-item-action">
+              <h5 className="text-primary">{item.descripcion}</h5>
+              <div className="d-flex justify-content-between">
+                <small className="text-muted">{formatDate(item.fechaRegistro)}</small>
+                <button onClick={() => cerrarTarea(item.idTarea)} className="btn btn-sm btn-outline-danger">
+                  Cerrar
+                </button>
               </div>
-            ))}
+            </div>
+          ))}
         </div>
       </div>
       <br></br>
       <footer className="text-start text-light ">
-      <div className="container">
-        <p>
-          Un proyecto de Franco Mariño -{' '}
-          <a
-            href="https://github.com/francoedson"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub
-          </a>{' '}
-          |{' '}
-          <a
-            href="https://www.linkedin.com/in/franco-mari%C3%B1o-2a289620a/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LinkedIn
-          </a>
-        </p>
-      </div>
-    </footer>
+        <div className="container">
+          <p>
+            Un proyecto de Franco Mariño -{' '}
+            <a
+              href="https://github.com/francoedson"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>{' '}
+            |{' '}
+            <a
+              href="https://www.linkedin.com/in/franco-mari%C3%B1o-2a289620a/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
+            </a>
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
